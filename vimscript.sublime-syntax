@@ -31,7 +31,7 @@ contexts:
       scope: keyword.control.vim
 
     - match: '\b(?:end)?(function)\b'
-      scope: support.function.definition.vim
+      scope:  entity.name.context.vim
 
     - match: '\b(let)\b'
       scope: storage.type.function.vim
