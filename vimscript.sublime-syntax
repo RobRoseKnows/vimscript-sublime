@@ -3,7 +3,10 @@
 # See http://www.sublimetext.com/docs/3/syntax.html
 name: Vimscript
 scope: source.vimscript
-file_extensions: [vim]
+file_extensions:
+  - vim
+  - vimrc
+  - .vimrc
 
 contexts:
   # The prototype context is prepended to all contexts but those setting
@@ -24,27 +27,33 @@ contexts:
     # strings in YAML. When using single quoted strings, only single quotes
     # need to be escaped: this is done by using two single quotes next to each
     # other.
-    - match: '\b(if|else|for|while)\b'
-      scope: keyword.control.example-c
+    - match: '\b(?:end)?(if|else|for|while|end|return|try)\b'
+      scope: keyword.control.vim
+
+    - match: '\b(?:end)?(function)\b'
+      scope:  entity.name.context.vim
+
+    - match: '\b(let)\b'
+      scope: storage.type.function.vim
 
   numbers:
     - match: '\b(-)?[0-9.]+\b'
-      scope: constant.numeric.example-c
+      scope: constant.numeric.vim
 
   strings:
     # Strings begin and end with quotes, and use backslashes as an escape
     # character.
     - match: '"'
-      scope: punctuation.definition.string.begin.example-c
+      scope: punctuation.definition.string.begin.vim
       push: inside_string
 
   inside_string:
     - meta_include_prototype: false
-    - meta_scope: string.quoted.double.example-c
+    - meta_scope: string.quoted.double.vim
     - match: '\.'
-      scope: constant.character.escape.example-c
+      scope: constant.character.escape.vim
     - match: '"'
-      scope: punctuation.definition.string.end.example-c
+      scope: punctuation.definition.string.end.vim
       pop: true
 
   comments:
@@ -53,6 +62,6 @@ contexts:
       scope: punctuation.definition.comment.vimscript
       push:
         # This is an anonymous context push for brevity.
-        - meta_scope: comment.line.double-slash.example-c
+        - meta_scope: comment.line.double-slash.vim
         - match: $\n?
           pop: true
